@@ -1,3 +1,7 @@
+source "$(brew --prefix)/opt/kube-ps1/share/kube-ps1.sh"
+PS1='$(kube_ps1)'$PS1
+
+
 Links úteis.
 
 - [K8S](https://kubernetes.io/)
@@ -23,3 +27,18 @@ Pré requisitos.
 	1. Digital Ocean
 	2. Configurar o contexto cloud no kubectl, para alterar entre contextos utilize o kubectx, dentro do contexto escolhido, você pode anterar entre namespaces utilizando o kubens
 8. Criar repositório no github, o conteúdo deste repositório será aplicado no cluster de k8s através do ArgoCD.
+
+
+
+Run Cluster on EKS
+
+1. Configure aws credential and profile in ~/.aws
+2. Get profile name and set in main.tf
+3. cd iac/
+4. terraform init
+5. terraform plan
+6. terraform apply
+7. Configure kubectl to manage cluster 
+   1. aws eks --region $(terraform output -raw region) update-kubeconfig \
+    --name $(terraform output -raw cluster_name) --profile guru
+8. kubectl --cluster-info
